@@ -13,14 +13,32 @@ public class HelloServlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-
-        // Hello
         PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + message + "</h1>");
-        out.println("</body></html>");
+        HttpSession session = request.getSession();
+        Cookie[] cookies = request.getCookies();
 
+
+        out.println("<html><body>");
+        if((session != null) && (session.getAttribute("connected") != null) &&  ((boolean) session.getAttribute("connected"))) {
+            out.println("<h2>Connected</h2>");
+        } else {
+            out.println("<a href=\"CreateSession\">Create session</a>");
+        }
+
+        //Greater than 1 because JSESSIONID is automatically created
+        if((cookies != null) && (cookies.length > 1)) {
+            for(Cookie cookie : cookies) {
+                out.println("<h3>" + cookie.getName() + " => " + cookie.getValue() + "</h3>");
+            }
+        } else {
+            Cookie newCookie = new Cookie("doesItHaveCookie", "true");
+            newCookie.setMaxAge(900);
+
+            response.addCookie(newCookie);
+        }
+
+        out.println("<h4>We are in " + getServletContext().getInitParameter("year") + "</h4>");
+        out.println("</body></html>");
     }
 
     public void destroy() {
