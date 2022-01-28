@@ -4,6 +4,7 @@ import java.io.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
+@WebServlet(name = "Hello", urlPatterns = {"/Hello"})
 public class HelloServlet extends HttpServlet {
     private String message;
 
@@ -14,17 +15,12 @@ public class HelloServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
 
-        String name = request.getParameter("name");
+        // Hello
+        PrintWriter out = response.getWriter();
+        out.println("<html><body>");
+        out.println("<h1>" + message + "</h1>");
+        out.println("</body></html>");
 
-        if(name != null) {
-            // Hello
-            PrintWriter out = response.getWriter();
-            out.println("<html><body>");
-            out.println("<h1>Hello " + name + "!</h1>");
-            out.println("</body></html>");
-        } else {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-        }
     }
 
     public void destroy() {
