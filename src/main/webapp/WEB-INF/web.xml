@@ -12,6 +12,10 @@
         <session-timeout>10</session-timeout>
     </session-config>
 
+    <listener>
+        <listener-class>fr.tzoreol.javaee.servlets.cours_servlets.GlobalListener</listener-class>
+    </listener>
+
     <welcome-file-list>
         <welcome-file>Hello</welcome-file>
     </welcome-file-list>

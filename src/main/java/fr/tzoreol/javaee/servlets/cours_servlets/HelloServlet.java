@@ -16,13 +16,10 @@ public class HelloServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         RequestDispatcher requestDispatcher;
+        request.getSession();
 
-        if(request.getParameter("firstname") == null) {
-            requestDispatcher = getServletContext().getRequestDispatcher("/error.html");
-        } else {
-            requestDispatcher = getServletContext().getRequestDispatcher("/Lastname?lastname=Pause");
-        }
-
+        getServletContext().setAttribute("firstname", "Kvine");
+        requestDispatcher = getServletContext().getRequestDispatcher("/Lastname?lastname=Pause");
         requestDispatcher.forward(request, response);
     }
 
