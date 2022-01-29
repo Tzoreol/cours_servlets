@@ -12,9 +12,15 @@
         <session-timeout>10</session-timeout>
     </session-config>
 
-    <listener>
-        <listener-class>fr.tzoreol.javaee.servlets.cours_servlets.GlobalListener</listener-class>
-    </listener>
+    <filter>
+        <filter-name>MagicWordFilter</filter-name>
+        <filter-class>fr.tzoreol.javaee.servlets.cours_servlets.MagicWordFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>MagicWordFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <welcome-file-list>
         <welcome-file>Hello</welcome-file>

@@ -15,12 +15,7 @@ public class HelloServlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        RequestDispatcher requestDispatcher;
-        request.getSession();
-
-        getServletContext().setAttribute("firstname", "Kvine");
-        requestDispatcher = getServletContext().getRequestDispatcher("/Lastname?lastname=Pause");
-        requestDispatcher.forward(request, response);
+        response.getWriter().println("<html><body>" + request.getAttribute("firstname") + "</body></html>");
     }
 
     public void destroy() {

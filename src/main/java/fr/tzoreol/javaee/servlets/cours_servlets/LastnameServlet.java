@@ -14,14 +14,10 @@ import java.io.PrintWriter;
 public class LastnameServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        getServletContext().setAttribute("firstname", "Kevin");
         PrintWriter writer = response.getWriter();
         writer.println("<html><body>");
-        writer.println(getServletContext().getAttribute("firstname") + " " + request.getParameter("lastname"));
+        writer.println(request.getAttribute("firstname"));
         writer.println("</body></html>");
-
-        HttpSession session = request.getSession();
-        session.invalidate();
-        getServletContext().removeAttribute("firstname");
+        writer.println("</body></html>");
     }
 }
