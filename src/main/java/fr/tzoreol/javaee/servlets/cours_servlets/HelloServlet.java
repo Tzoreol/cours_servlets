@@ -1,6 +1,8 @@
 package fr.tzoreol.javaee.servlets.cours_servlets;
 
 import java.io.*;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
@@ -12,33 +14,16 @@ public class HelloServlet extends HttpServlet {
         message = "Hello L3!";
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        PrintWriter out = response.getWriter();
-        HttpSession session = request.getSession();
-        Cookie[] cookies = request.getCookies();
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        RequestDispatcher requestDispatcher;
 
-
-        out.println("<html><body>");
-        if((session != null) && (session.getAttribute("connected") != null) &&  ((boolean) session.getAttribute("connected"))) {
-            out.println("<h2>Connected</h2>");
+        if(request.getParameter("firstname") == null) {
+            requestDispatcher = getServletContext().getRequestDispatcher("/error.html");
         } else {
-            out.println("<a href=\"CreateSession\">Create session</a>");
+            requestDispatcher = getServletContext().getRequestDispatcher("/Lastname?lastname=Pause");
         }
 
-        //Greater than 1 because JSESSIONID is automatically created
-        if((cookies != null) && (cookies.length > 1)) {
-            for(Cookie cookie : cookies) {
-                out.println("<h3>" + cookie.getName() + " => " + cookie.getValue() + "</h3>");
-            }
-        } else {
-            Cookie newCookie = new Cookie("doesItHaveCookie", "true");
-            newCookie.setMaxAge(900);
-
-            response.addCookie(newCookie);
-        }
-
-        out.println("<h4>We are in " + getServletContext().getInitParameter("year") + "</h4>");
-        out.println("</body></html>");
+        requestDispatcher.forward(request, response);
     }
 
     public void destroy() {
